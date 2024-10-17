@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import { fetchProducts, Product } from '@/api/products';
 import Image from 'next/image';
 import SearchBar from '@/components/SearchBar';
@@ -11,7 +12,6 @@ interface HomeProps {
 }
 
 const Home = ({ products }: HomeProps) => {
-
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [priceRange, setPriceRange] = useState([0, 1000]);
@@ -48,6 +48,12 @@ const Home = ({ products }: HomeProps) => {
             />
             <h2 className="text-xl font-semibold">{product.title}</h2>
             <p className="text-lg font-bold text-gray-700">Preço: ${product.price}</p>
+            
+            <Link href={`/product/${product.id}`} passHref>
+              <span className="inline-block mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                Ver detalhes
+              </span>
+            </Link>
           </li>
         ))}
       </ul>
@@ -75,3 +81,5 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default Home;
+
+
