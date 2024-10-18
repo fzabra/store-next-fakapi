@@ -1,5 +1,8 @@
 import { GetServerSideProps } from 'next';
 import { Product, fetchProductById } from '@/api/products';
+import ProductSlider from '@/components/ProductSlider'
+import CategoryMenu from '@/components/CategoryMenu';
+import Footer from '@/components/Footer'
 import Image from 'next/image';
 
 interface ProductDetailsProps {
@@ -8,7 +11,8 @@ interface ProductDetailsProps {
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
-    <div className="container mx-auto p-4">
+    <div className="flex flex-col min-h-screen">
+    <CategoryMenu />
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2">
@@ -32,6 +36,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           </div>
         </div>
       </div>
+      <ProductSlider />
+      <Footer />
     </div>
   );
 };
