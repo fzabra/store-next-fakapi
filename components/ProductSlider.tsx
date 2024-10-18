@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { Navigation } from 'swiper/modules';
 import Image from 'next/image';
-import { fetchProducts, Product } from '@/api/products'; // Reutilizando a mesma função de fetch
+import { fetchProducts, Product } from '@/api/products';
 
 const ProductSlider = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -14,7 +14,7 @@ const ProductSlider = () => {
         const data = await fetchProducts();
         setProducts(data);
       } catch (error) {
-        console.error('Erro ao buscar os produtos', error);
+        console.error('Error fetching products', error);
       }
     };
 
@@ -37,7 +37,7 @@ const ProductSlider = () => {
               <Image
                 src={product.image}
                 alt={product.title}
-                width={300} // Ajustando para tamanhos consistentes
+                width={300}
                 height={300}
                 className="object-cover h-52"
               />

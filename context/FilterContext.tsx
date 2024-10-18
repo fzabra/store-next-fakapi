@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { fetchCategories } from '@/api/products';
 
 interface FilterContextProps {
   searchTerm: string;
@@ -7,7 +8,7 @@ interface FilterContextProps {
   setSelectedCategory: (category: string) => void;
   priceRange: number[];
   setPriceRange: (range: number[]) => void;
-  categories: string[]; // Adicionar categorias no contexto
+  categories: string[];
 }
 
 const FilterContext = createContext<FilterContextProps | undefined>(undefined);
@@ -16,16 +17,19 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [categories, setCategories] = useState<string[]>([]); // Estado para as categorias
+  const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await fetch('https://fakestoreapi.com/products/categories');
-      const data = await response.json();
-      setCategories(data);
+    const loadCategories = async () => {
+      try {
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+      }
     };
 
-    fetchCategories();
+    loadCategories();
   }, []);
 
   return (

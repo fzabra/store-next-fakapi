@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next';
 import { Product, fetchProductById } from '@/api/products';
-import ProductSlider from '@/components/ProductSlider'
+import ProductSlider from '@/components/ProductSlider';
 import CategoryMenu from '@/components/CategoryMenu';
-import Footer from '@/components/Footer'
+import Footer from '@/components/Footer';
 import Image from 'next/image';
 
 interface ProductDetailsProps {
@@ -12,7 +12,7 @@ interface ProductDetailsProps {
 const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
     <div className="flex flex-col min-h-screen">
-    <CategoryMenu />
+      <CategoryMenu />
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2">
@@ -45,19 +45,27 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!;
 
-  const product = await fetchProductById(id);
+  try {
+    const product = await fetchProductById(id);
 
-  if (!product) {
+    if (!product) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: {
+        product,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching product by id in getServerSideProps:', error);
+
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: {
-      product,
-    },
-  };
 };
 
 export default ProductDetails;
