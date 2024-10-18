@@ -25,11 +25,25 @@ const ProductSlider = () => {
     <div className="product-slider flex justify-center mt-10">
       <Swiper
         spaceBetween={50}
-        slidesPerView={3}
         navigation
         loop={true}
+        centeredSlides={true}
         modules={[Navigation]}
         className="w-full max-w-5xl"
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 50,
+          },
+        }}
       >
         {products.map((product) => (
           <SwiperSlide key={product.id}>

@@ -35,9 +35,9 @@ const Home = ({ products }: HomeProps) => {
       <Banner />
 
       <div className="container mx-auto p-4">  
-        <div className="mb-6 flex justify-between items-center">
+        <div className="mb-6 flex flex-col md:flex-row justify-between items-center">
           <SearchBar />
-          <div className="mb-6 flex justify-between gap-5">
+          <div className="mb-6 mt-6 flex flex-col md:flex-row justify-between gap-5">
             <CategoryFilter categories={categories} />
             <PriceFilter />
           </div>

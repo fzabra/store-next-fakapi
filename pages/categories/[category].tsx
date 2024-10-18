@@ -27,10 +27,10 @@ const CategoryPage = ({ category, products }: CategoryPageProps) => {
   const { searchTerm, priceRange} = useFilter();
 
   const filteredProducts = products.filter((product) => {
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-
-    return matchesPrice;
+  
+    return matchesSearch && matchesPrice;
   });
 
   if (router.isFallback) {
@@ -43,12 +43,10 @@ const CategoryPage = ({ category, products }: CategoryPageProps) => {
       <Banner />
       <div className="container mx-auto p-4">
 
-      <div className="mb-6 flex justify-between items-center">
+        <div className="mb-6 flex flex-col md:flex-row justify-between items-center">
           <h1 className="text-4xl font-bold mb-6 text-center capitalize">{category}</h1>
           <PriceFilter />
         </div>
-     
-        
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <div key={product.id} className="bg-white rounded-lg shadow-lg p-4">
