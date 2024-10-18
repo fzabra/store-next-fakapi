@@ -82,8 +82,8 @@ export const getStaticProps: GetStaticProps = async () => {
       },
       revalidate: 60,
     };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    console.error('Error fetching products in getStaticProps:', error);
     return {
       props: {
         products: [],
@@ -91,5 +91,6 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   }
 };
+
 
 export default Home;
