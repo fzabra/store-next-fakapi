@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction } from 'react';
+import { useFilter } from '@/context/FilterContext';
 
 interface CategoryFilterProps {
   categories: string[];
-  selectedCategory: string;
-  setSelectedCategory: Dispatch<SetStateAction<string>>;
 }
 
-const CategoryFilter = ({ categories, selectedCategory, setSelectedCategory }: CategoryFilterProps) => {
+const CategoryFilter = ({ categories }: CategoryFilterProps) => {
+  const { selectedCategory, setSelectedCategory } = useFilter();
+
   return (
     <select
       value={selectedCategory}
