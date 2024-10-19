@@ -26,15 +26,18 @@ const CategoryPage = ({ category, products }: CategoryPageProps) => {
   const router = useRouter();
   const { searchTerm, priceRange} = useFilter();
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = Array.isArray(products) ? products.filter((product) => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-  
     return matchesSearch && matchesPrice;
-  });
+  }) : [];
 
   if (router.isFallback) {
     return <div>Carregando...</div>;
+  }
+
+  if (!products || products.length === 0) {
+    return <div className="container mx-auto p-4">Nenhum produto encontrado nesta categoria.</div>;
   }
 
   return (
@@ -101,9 +104,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const category = context.params?.category as string;
-
   try {
-    const products = await fetchProductsByCategory(category);
+    const products = await fetchProductsByCategory(category) || [];
     return {
       props: {
         category,
